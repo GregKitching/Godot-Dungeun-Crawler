@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dwxyy121p584v"
+path="res://.godot/imported/Chest.dialogue-356bac2d3c4caec1e5c7e5e720ab0201.tres"
+
+[deps]
+
+source_file="res://Dialogue/Chest.dialogue"
+dest_files=["res://.godot/imported/Chest.dialogue-356bac2d3c4caec1e5c7e5e720ab0201.tres"]
+
+[params]
+
+defaults=true

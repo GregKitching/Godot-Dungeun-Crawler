@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6wgo0a0mg653"]
+
+[ext_resource type="Script" path="res://scripts/wall.gd" id="1_8wm5c"]
+[ext_resource type="Material" uid="uid://bq8rhmx6qo2e8" path="res://textures/wall.tres" id="1_esrwq"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8awg8"]
+material = ExtResource("1_esrwq")
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_8wm5c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.469)
+material_override = ExtResource("1_esrwq")
+mesh = SubResource("QuadMesh_8awg8")

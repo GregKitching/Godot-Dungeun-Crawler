@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://w1bklgo7wckg"]
+
+[ext_resource type="Texture2D" uid="uid://dhpf0mbbkjhit" path="res://textures/chest_open.png" id="1_jximo"]
+
+[resource]
+transparency = 1
+shading_mode = 2
+albedo_texture = ExtResource("1_jximo")
+texture_filter = 0

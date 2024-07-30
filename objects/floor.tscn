@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpyr1j3167d5a"]
+
+[ext_resource type="Material" uid="uid://cf18wpebc7h0a" path="res://textures/floor.tres" id="1_sl0qy"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_huv3w"]
+material = ExtResource("1_sl0qy")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0)
+material_override = ExtResource("1_sl0qy")
+mesh = SubResource("QuadMesh_huv3w")
+skeleton = NodePath("../..")

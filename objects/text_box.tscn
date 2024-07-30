@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcv5671xt7nw3"]
+
+[ext_resource type="Script" path="res://scripts/text_box.gd" id="1_rhiva"]
+
+[sub_resource type="Theme" id="Theme_22g1d"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_j83k4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ebgck"]
+texture = SubResource("CanvasTexture_j83k4")
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_q1omp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6v0e"]
+font_size = 32
+
+[node name="TextBox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 210.0
+script = ExtResource("1_rhiva")
+
+[node name="Border" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Border"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_22g1d")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ebgck")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_q1omp")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Start" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "*"
+label_settings = SubResource("LabelSettings_u6v0e")
+
+[node name="Text" type="RichTextLabel" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+shortcut_keys_enabled = false
+
+[node name="End" type="Label" parent="MarginContainer/Panel/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(17, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "v"
+label_settings = SubResource("LabelSettings_u6v0e")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.06
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

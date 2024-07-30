@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl8mify4niq42"]
+
+[ext_resource type="Material" uid="uid://ckb4vg8ubntn6" path="res://textures/wall_stretched.tres" id="1_4f68k"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_vls31"]
+lightmap_size_hint = Vector2i(7, 7)
+
+[node name="Pillar" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.031, 0, 0, 0, 1, 0, 0, 0, 1, -0.484, 0.5, -0.469)
+material_override = ExtResource("1_4f68k")
+mesh = SubResource("QuadMesh_vls31")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.35505e-09, 0, 1, 0, 1, 0, -0.031, 0, -4.37114e-08, -0.469, 0.5, -0.484)
+material_override = ExtResource("1_4f68k")
+mesh = SubResource("QuadMesh_vls31")

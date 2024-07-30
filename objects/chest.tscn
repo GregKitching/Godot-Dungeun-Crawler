@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://crm1710xekod1"]
+
+[ext_resource type="Script" path="res://scripts/static_object.gd" id="1_8jrr4"]
+[ext_resource type="Material" uid="uid://c4jif634m37nu" path="res://textures/chest_closed.tres" id="1_tp5pl"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_114ti"]
+
+[node name="Chest" type="Node3D"]
+script = ExtResource("1_8jrr4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.19, 0)
+material_override = ExtResource("1_tp5pl")
+mesh = SubResource("QuadMesh_114ti")

@@ -1,0 +1,14 @@
+~ start
+
+#set GameHandler.m_textBoxExists = true
+A chest stands before you.
+Open it?
+- Yes
+	You open the chest.
+	set GameHandler.m_yesNo = true
+	=> END
+- No
+	set GameHandler.m_yesNo = false
+	=> END
+
+=> END
