@@ -1,19 +1,24 @@
 class_name GameCommand
 
-var startExecuted = false
-var finishedExecuted = false
+var m_actor
+
+var startedExecuting = false
+var finishedExecuting = false
 
 func execute(delta):
-	if !finishedExecuted:
-		if !startExecuted:
+	if !finishedExecuting:
+		if !startedExecuting:
 			start()
-			startExecuted = true
+			startedExecuting = true
 		body(delta)
 		if endCond():
 			end()
-			finishedExecuted = true
+			finishedExecuting = true
 			return true
 	return false
+
+func getActor():
+	return m_actor
 
 func start():
 	pass

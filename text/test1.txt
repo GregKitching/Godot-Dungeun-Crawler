@@ -1,1 +1,0 @@
-This is text.{n}This is more text after a pause.{p}This is a new paragraph.

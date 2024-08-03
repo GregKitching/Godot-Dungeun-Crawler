@@ -2,8 +2,6 @@ extends GameCommand
 
 class_name GameCommandMove
 
-var m_actor
-
 var m_direction = null
 
 var m_doneMoving = false

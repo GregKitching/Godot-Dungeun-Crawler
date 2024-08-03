@@ -2,7 +2,7 @@ extends Node
 
 class_name GameScript
 
-var m_commandPackets = []
+var m_commands = []
 
-func getCommandPackets():
-	return m_commandPackets
+func getCommands():
+	return m_commands

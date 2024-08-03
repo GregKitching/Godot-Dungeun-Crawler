@@ -6,6 +6,11 @@ enum Direction{NORTH, EAST, SOUTH, WEST}
 
 enum MoveAction{MOVE_FORWARDS, MOVE_BACKWARDS, MOVE_LEFT, MOVE_RIGHT, TURN_LEFT, TURN_RIGHT}
 
+var m_commandProcessor
+
+func _init():
+	m_commandProcessor = CommandProcessor.new()
+
 var m_moving = false
 var m_direction = Direction.NORTH
 var m_movespeed = 2
@@ -32,6 +37,12 @@ var basis_map = {
 		Direction.SOUTH: [Vector3(-1, 0, 0), Vector3(0, 0, -1)],
 		Direction.WEST: [Vector3(0, 0, -1), Vector3(1, 0, 0)]
 }
+
+func addCommand(command):
+	m_commandProcessor.addCommand(command)
+
+func executingCommand():
+	return m_commandProcessor.executingCommand()
 
 func can_move(dir):
 	var tile = m_map.get_tile(self.transform.origin.x, -self.transform.origin.z)
@@ -220,4 +231,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	m_commandProcessor.processCommand(delta)

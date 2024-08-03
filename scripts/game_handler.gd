@@ -10,13 +10,13 @@ var m_disableMovement = false
 
 var m_staticObjects = {}
 
-var m_commandQueue = []
-
-var m_currentCommands = []
-var m_currentCommandsStatus = []
-
 var m_textBoxExists = false
 var m_yesNo = false
+
+var m_commandProcessor
+
+func _init():
+	m_commandProcessor = CommandProcessor.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,38 +38,40 @@ func _process(delta):
 		else:
 			m_hud.setMenuActive(true)
 			m_disableMovement = true
-	if m_currentCommands.is_empty():
+	if !m_player.executingCommand() and !m_commandProcessor.executingCommand():
 		if !m_disableMovement:
 			if Input.is_action_pressed("key_w"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_FORWARDS)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_FORWARDS))
 			elif Input.is_action_pressed("key_q"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_LEFT)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_LEFT))
 			elif Input.is_action_pressed("key_s"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_BACKWARDS)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_BACKWARDS))
 			elif Input.is_action_pressed("key_e"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_RIGHT)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_RIGHT))
 			elif Input.is_action_pressed("key_a"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_LEFT)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_LEFT))
 			elif Input.is_action_pressed("key_d"):
-				m_commandQueue.push_front([GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_RIGHT)])
+				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_RIGHT))
 			elif Input.is_action_pressed("key_l"):
 				scanObjects(m_player.m_posX, m_player.m_posZ)
+				#runScript(GameScriptTest.new(self, m_player))
 			m_hud.setCoords(m_player.m_posX, 0, m_player.m_posZ)
-		if !m_commandQueue.is_empty():
-			m_currentCommands = m_commandQueue.pop_back()
-			for i in range(len(m_currentCommands)):
-				m_currentCommandsStatus.push_back(false)
-	var endCommandPacket = true
-	for i in range(len(m_currentCommands)):
-		if m_currentCommands[i].execute(delta):
-			m_currentCommandsStatus[i] = true
-		endCommandPacket = endCommandPacket and m_currentCommandsStatus[i]
-	if endCommandPacket:
-		m_currentCommands.clear()
-		m_currentCommandsStatus.clear()
+	m_commandProcessor.processCommand(delta)
+
+func addCommand(command):
+	m_commandProcessor.addCommand(command)
+
+func executingCommand():
+	return m_commandProcessor.executingCommand()
+
+func setCanMove(canMove):
+	m_disableMovement = !canMove
 
 func runScript(script):
-	m_commandQueue = script.getCommandPackets()
+	var commands = script.getCommands()
+	while !commands.is_empty():
+		var command = commands.pop_back()
+		command.getActor().addCommand(command)
 
 func scanObjects(x, z):
 	var actions = []

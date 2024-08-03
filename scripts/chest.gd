@@ -6,13 +6,8 @@ class_name Chest
 
 var m_opened = false
 
-"""func open():
-	m_mesh.material_override = tex
-	m_opened = true"""
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#m_gameScript = GameScriptChest.new(self.get_node("../../test"), self)
 	m_gameScript = GameScriptChest.new(get_tree().get_root().get_node("test"), self)
 	super._ready()
 
