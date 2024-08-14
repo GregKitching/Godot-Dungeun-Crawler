@@ -1,9 +1,9 @@
 extends GameCommand
 
-class_name GameCommandChangeTexture
+class_name GameCommandRunScript
 
 func start():
-	m_params[0].changeSprite(m_params[1])
+	pass
 
 func body(delta):
 	pass

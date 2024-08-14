@@ -5,7 +5,6 @@ class_name StaticObject
 var m_meshInstance3D
 var m_posX = 0
 var m_posZ = 0
-var m_gameScript = null
 @export var m_solid: bool
 @export var m_interactableN: bool
 @export var m_interactableS: bool
@@ -21,14 +20,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#print(delta)
 	pass
 
 func changeSprite(sprite):
 	m_meshInstance3D.material_override = load("res://textures/" + sprite + ".tres")
-
-func getGameScript():
-	return m_gameScript
+	m_meshInstance3D.material_override.set_billboard_mode(BaseMaterial3D.BILLBOARD_FIXED_Y)
+	m_meshInstance3D.material_override.set_flag(BaseMaterial3D.FLAG_BILLBOARD_KEEP_SCALE, true)
 
 func hasGameScript():
-	return m_gameScript != null
+	return false

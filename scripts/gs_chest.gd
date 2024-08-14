@@ -2,6 +2,18 @@ extends GameScript
 
 class_name GameScriptChest
 
+var m_gameHandler = null
+var m_chest = null
+
 func _init(gameHandler, chest):
-	m_commands.push_front(GameCommandTextBox.new(gameHandler, "Chest"))
-	m_commands.push_front(GameCommandChangeTexture.new(gameHandler, chest, "chest_open"))
+	m_gameHandler = gameHandler
+	m_chest = chest
+
+func getCommands():
+	var commands = []
+	commands.push_front(GameCommandTextBox.new(m_gameHandler, ["Chest"]))
+	commands.push_front(GameCommandSynchronize.new(null, [m_gameHandler]))
+	commands.push_front(GameCommandConditionalSkip.new(null, [1, [m_gameHandler, "getYesNo"], [m_gameHandler, "dummyReturnFalse"], GameCommandConditionalSkip.Condition.EQUAL]))
+	commands.push_front(GameCommandCallFunc.new(m_gameHandler, [m_chest, "open"]))
+	commands.push_front(GameCommandEnd.new(null, []))
+	return commands

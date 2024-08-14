@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqwwtiq7qlcsp"]
+[gd_scene load_steps=13 format=3 uid="uid://bqwwtiq7qlcsp"]
 
 [ext_resource type="Script" path="res://scripts/game_handler.gd" id="1_4blvg"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_23lmk"]
@@ -11,8 +11,9 @@
 [ext_resource type="Script" path="res://scripts/chest.gd" id="8_08ts7"]
 [ext_resource type="PackedScene" uid="uid://crm1710xekod1" path="res://objects/chest.tscn" id="8_nojwx"]
 [ext_resource type="Script" path="res://scripts/dynamic_object.gd" id="9_502hs"]
+[ext_resource type="Script" path="res://scripts/test0.gd" id="11_cu1rl"]
 
-[node name="test" type="Node3D"]
+[node name="MapRoot" type="Node3D"]
 script = ExtResource("1_4blvg")
 
 [node name="HUD" parent="." instance=ExtResource("1_tx4y6")]
@@ -211,6 +212,17 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 [node name="Chest0" parent="Objects" instance=ExtResource("8_nojwx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
 script = ExtResource("8_08ts7")
+m_interactableN = true
+m_interactableS = true
+m_interactableE = true
+m_interactableW = true
+
+[node name="Test0" type="Node3D" parent="Objects"]
+script = ExtResource("11_cu1rl")
+m_interactableN = true
+m_interactableS = true
+m_interactableE = true
+m_interactableW = true
 
 [node name="Player" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

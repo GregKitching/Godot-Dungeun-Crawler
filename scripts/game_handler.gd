@@ -11,12 +11,14 @@ var m_disableMovement = false
 var m_staticObjects = {}
 
 var m_textBoxExists = false
-var m_yesNo = false
+static var m_yesNo = false
 
 var m_commandProcessor
+var m_gameScriptRunner
 
 func _init():
 	m_commandProcessor = CommandProcessor.new()
+	m_gameScriptRunner = GameScriptRunner.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,21 +43,21 @@ func _process(delta):
 	if !m_player.executingCommand() and !m_commandProcessor.executingCommand():
 		if !m_disableMovement:
 			if Input.is_action_pressed("key_w"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_FORWARDS))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.MOVE_FORWARDS]))
 			elif Input.is_action_pressed("key_q"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_LEFT))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.MOVE_LEFT]))
 			elif Input.is_action_pressed("key_s"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_BACKWARDS))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.MOVE_BACKWARDS]))
 			elif Input.is_action_pressed("key_e"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.MOVE_RIGHT))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.MOVE_RIGHT]))
 			elif Input.is_action_pressed("key_a"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_LEFT))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.TURN_LEFT]))
 			elif Input.is_action_pressed("key_d"):
-				m_player.addCommand(GameCommandMove.new(m_player, DynamicObject.MoveAction.TURN_RIGHT))
+				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.TURN_RIGHT]))
 			elif Input.is_action_pressed("key_l"):
 				scanObjects(m_player.m_posX, m_player.m_posZ)
-				#runScript(GameScriptTest.new(self, m_player))
 			m_hud.setCoords(m_player.m_posX, 0, m_player.m_posZ)
+	m_gameScriptRunner.runScript(2)
 	m_commandProcessor.processCommand(delta)
 
 func addCommand(command):
@@ -68,10 +70,8 @@ func setCanMove(canMove):
 	m_disableMovement = !canMove
 
 func runScript(script):
-	var commands = script.getCommands()
-	while !commands.is_empty():
-		var command = commands.pop_back()
-		command.getActor().addCommand(command)
+	if !m_gameScriptRunner.isRunningScript():
+		m_gameScriptRunner.loadScript(script)
 
 func scanObjects(x, z):
 	var actions = []
@@ -92,3 +92,18 @@ func textBoxActive():
 
 func deactivateTextBox(textBox):
 	m_textBoxExists = false
+
+func callFunc(object, funcName):
+	object.call(funcName)
+
+func setYesNo(val):
+	m_yesNo = val
+
+func getYesNo():
+	return m_yesNo
+
+func dummyReturnTrue():
+	return true
+
+func dummyReturnFalse():
+	return false

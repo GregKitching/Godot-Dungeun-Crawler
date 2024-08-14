@@ -1,9 +1,14 @@
 class_name GameCommand
 
-var m_actor
+var m_actor = null
+var m_params = []
 
 var startedExecuting = false
 var finishedExecuting = false
+
+func _init(actor, params):
+	m_actor = actor
+	m_params = params
 
 func execute(delta):
 	if !finishedExecuting:

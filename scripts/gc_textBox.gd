@@ -2,14 +2,8 @@ extends GameCommand
 
 class_name GameCommandTextBox
 
-var m_file
-
-func _init(actor, file):
-	m_actor = actor
-	m_file = file
-
 func start():
-	m_actor.createTextBox(m_file)
+	m_actor.createTextBox(m_params[0])
 
 func body(delta):
 	pass

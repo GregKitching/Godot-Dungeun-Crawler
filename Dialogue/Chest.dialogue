@@ -5,10 +5,15 @@ A chest stands before you.
 Open it?
 - Yes
 	You open the chest.
-	set GameHandler.m_yesNo = true
+	#set GameHandler.m_yesNo = true
+	do GameHandler.setYesNo(true)
+	#set Chest.m_opened = true
+	#do GameHandler.set_yes_no.emit(true)
 	=> END
 - No
-	set GameHandler.m_yesNo = false
+	#set GameHandler.m_yesNo = false
+	do GameHandler.setYesNo(false)
+	#do GameHandler.set_yes_no.emit(false)
 	=> END
 
 => END

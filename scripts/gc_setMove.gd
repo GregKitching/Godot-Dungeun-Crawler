@@ -2,14 +2,8 @@ extends GameCommand
 
 class_name GameCommandSetMove
 
-var m_canMove
-
-func _init(actor, canMove):
-	m_actor = actor
-	m_canMove = canMove
-
 func start():
-	m_actor.setCanMove(m_canMove)
+	m_actor.setCanMove(m_params[0])
 
 func body(delta):
 	pass
