@@ -47,6 +47,25 @@ func runScript(times):
 						for j in range(skipNum):
 							m_commandQueue.pop_back()
 					m_currentCommand = null
+				elif m_currentCommand is GameCommandConditionalSkipImmediate:
+					var skip = false
+					if m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.EQUAL:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) == m_currentCommand.m_params[2]
+					elif m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.NOT_EQUAL:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) != m_currentCommand.m_params[2]
+					elif m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.LESS_THAN:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) < m_currentCommand.m_params[2]
+					elif m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.LESS_THAN_OR_EQUAL:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) <= m_currentCommand.m_params[2]
+					elif m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.GREATER_THAN:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) > m_currentCommand.m_params[2]
+					elif m_currentCommand.m_params[3] == GameCommandConditionalSkip.Condition.GREATER_THAN_OR_EQUAL:
+						skip = m_currentCommand.m_params[1][0].call(m_currentCommand.m_params[1][1]) >= m_currentCommand.m_params[2]
+					if skip:
+						var skipNum = m_currentCommand.m_params[0]
+						for j in range(skipNum):
+							m_commandQueue.pop_back()
+					m_currentCommand = null
 				elif m_currentCommand is GameCommandSynchronize:
 					m_halted = true
 					var unhalt = true

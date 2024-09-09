@@ -1,23 +1,28 @@
 class_name Character
 
-var m_max_hp
-var m_max_mp
+var m_characterBase = null
+
+var m_maxHp
+var m_maxMp
 var m_attack
 var m_defence
-var m_magic_attack
-var m_magic_defence
 var m_speed
+var m_mAttack
+var m_mDefence
 
 var m_hp
 var m_mp
 
-func _init(_hp, _mp, _a, _d, _ma, _md, _s):
-	m_max_hp = _hp
-	m_max_mp = _mp
-	m_attack = _a
-	m_defence = _d
-	m_magic_attack = _ma
-	m_magic_defence = _md
-	m_speed = _s
-	m_hp = m_max_hp
-	m_mp = m_max_mp
+func _init(base):
+	m_characterBase = base
+	
+	m_maxHp = m_characterBase.m_baseHp
+	m_maxMp = m_characterBase.m_baseMp
+	m_attack = m_characterBase.m_strength
+	m_defence = m_characterBase.m_constitution
+	m_speed = m_characterBase.m_agility
+	m_mAttack = m_characterBase.m_intelligence
+	m_mDefence = m_characterBase.m_willpower
+	
+	m_hp = m_maxHp
+	m_mp = m_maxMp

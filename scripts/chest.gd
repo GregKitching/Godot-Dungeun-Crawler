@@ -17,6 +17,19 @@ func open():
 	m_opened = true
 	changeSprite("chest_open")
 
+func saveState():
+	var data = super.saveState()
+	data["m_opened"] = m_opened
+	return data
+
+func loadState(data):
+	super.loadState(data)
+	for key in data:
+		if key == "m_opened":
+			m_opened = data[key]
+			if m_opened:
+				changeSprite("chest_open")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()

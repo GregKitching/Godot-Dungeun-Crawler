@@ -11,5 +11,4 @@ script = ExtResource("1_8wm5c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.469)
-material_override = ExtResource("1_esrwq")
 mesh = SubResource("QuadMesh_8awg8")

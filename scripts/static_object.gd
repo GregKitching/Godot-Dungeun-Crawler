@@ -29,3 +29,19 @@ func changeSprite(sprite):
 
 func hasGameScript():
 	return false
+
+func saveState():
+	var data = {}
+	data["m_posX"] = m_posX
+	data["m_posZ"] = m_posZ
+	return data
+
+func loadState(data):
+	for key in data:
+		match key:
+			"m_posX":
+				m_posX = data[key]
+				self.transform.origin.x = m_posX
+			"m_posZ":
+				m_posZ = data[key]
+				self.transform.origin.z = m_posZ

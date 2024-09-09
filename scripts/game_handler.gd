@@ -8,28 +8,28 @@ var m_map
 
 var m_disableMovement = false
 
-var m_staticObjects = {}
-
 var m_textBoxExists = false
 static var m_yesNo = false
 
 var m_commandProcessor
 var m_gameScriptRunner
 
+var m_playerCharacter
+var m_playerCharacterBase
+
 func _init():
 	m_commandProcessor = CommandProcessor.new()
 	m_gameScriptRunner = GameScriptRunner.new()
+	m_playerCharacterBase = CharacterBase.new("Player", 20, 10, 5, 5, 5, 5, 5)
+	m_playerCharacter = Character.new(m_playerCharacterBase)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	DialogueManager.dialogue_ended.connect(deactivateTextBox)
 	m_player = self.get_node("Player")
 	m_hud = self.get_node("HUD")
-	m_map = self.get_node("Map")
-	var objectContainer = self.get_node("Objects")
-	var objectChildren = objectContainer.get_children()
-	for child in objectChildren:
-		m_staticObjects[child.name] = child
+	m_hud.setPlayerInfo(m_playerCharacter)
+	loadMap("map_test", 0, 0, DynamicObject.Direction.NORTH)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -54,7 +54,7 @@ func _process(delta):
 				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.TURN_LEFT]))
 			elif Input.is_action_pressed("key_d"):
 				m_player.addCommand(GameCommandMove.new(m_player, [DynamicObject.MoveAction.TURN_RIGHT]))
-			elif Input.is_action_pressed("key_l"):
+			elif Input.is_action_just_pressed("key_l"):
 				scanObjects(m_player.m_posX, m_player.m_posZ)
 			m_hud.setCoords(m_player.m_posX, 0, m_player.m_posZ)
 	m_gameScriptRunner.runScript(2)
@@ -74,12 +74,7 @@ func runScript(script):
 		m_gameScriptRunner.loadScript(script)
 
 func scanObjects(x, z):
-	var actions = []
-	for key in m_staticObjects:
-		var object = m_staticObjects[key]
-		if object.m_posX == x and object.m_posZ == z:
-			if object.hasGameScript():
-				actions.push_back(object)
+	var actions = m_map.scanObjects(x, z, m_player.m_direction)
 	if len(actions) == 1:
 		runScript(actions[0].getGameScript())
 
@@ -107,3 +102,21 @@ func dummyReturnTrue():
 
 func dummyReturnFalse():
 	return false
+
+func loadMap(mapName, x, z, direction):
+	if m_map:
+		self.remove_child(m_map) # Possible issues with dynamic objects still executing commands
+		#self.queue_free()
+	m_player.setPosition(x, z, direction)
+	m_hud.setCoords(m_player.m_posX, 0, m_player.m_posZ)
+	var map = load("res://scenes/maps/" + mapName + ".tscn")
+	m_map = map.instantiate()
+	m_map.m_mapName = mapName
+	self.add_child(m_map, true)
+	m_map.loadState()
+
+func getMapTile(x, z):
+	if m_map:
+		return m_map.get_tile(x, z)
+	else:
+		return null
